@@ -1,6 +1,0 @@
-(define testlist (list 23 72 149 34))
-
-(define (last-pair list)
-  (cond ((null? list) (error: "List must be non-empty."))
-	((= (cdr list) nil) (car list))
-	(else (last-pair (cdr list)))))

@@ -1,8 +1,0 @@
-for small tolerance percentages...
-
-interval-1 is 5, with 5% (0.05):  (4.75, 5.25)
-interval-2 is 7, with 10% (0.10): (6.3,  7.7)
-
-product is (29.925, 40.425) with a center of 35.175. it's percent tolerance is: 14.95~
-
-p_12 = p_1 + p_2
