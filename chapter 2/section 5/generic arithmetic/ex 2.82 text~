@@ -1,0 +1,14 @@
+
+Exercise 2.82: Show how to generalize apply-generic to handle coercion in the general case of multiple arguments. One strategy is to attempt to coerce all the arguments to the type of the first argument, then to the type of the second argument, and so on. Give an example of a situation where this strategy (and likewise the two-argument version given above) is not sufficiently general. (Hint: Consider the case where there are some suitable mixed-type operations present in the table that will not be tried.) 
+
+
+Two-argument version: We have, for instance, a complex, and a rational number, in that
+order. First we will try to coerce a complex number to a rational number, this doesn't
+work. Then we try to coerce a rational number to a complex number. This does work. But,
+we don't know if there exists a function to operate on that, and there may not be.
+But there may be a mixed-type operation in our table that would operate on one
+of these arguments, and another type entirely, one that one of the arguments could,
+in theory, be coerced in to. But since the logic here only works by coercing the
+arguments to each other, rather than to the kinds of types available, this will fail.
+
+So what would be a better approach for apply-generic when attempting to perform an operation on mixed type arguments for which there is no readily apparent type-match.

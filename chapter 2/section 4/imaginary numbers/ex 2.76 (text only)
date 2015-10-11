@@ -1,0 +1,22 @@
+
+Exercise 2.76: As a large system with generic operations evolves, new types of data objects or new operations may be needed. For each of the three strategies—generic operations with explicit dispatch, data-directed style, and message-passing-style—describe the changes that must be made to a system in order to add new types or new operations. Which organization would be most appropriate for a system in which new types must often be added? Which would be most appropriate for a system in which new operations must often be added? 
+
+Generic operations w/ explicit dispatch:
+To add new types or operations, we must construct sets of constructors,
+selectors, and operations for each type, being mindful that they do not conflict
+w/ the namespace of existing operations in said large system. This is difficult to do
+and probably not the greatest approach. This probably would not be a good approach
+for any large system.
+
+Data-directed style:
+We would need to create a new install-package, one that would add the appropriate
+get/put hooks to the table. If we were adding new types, this is probably the best way
+to go, as all of the methods associated w/ the new type are installed in the package,
+and, as such, isolated from the rest of the namespace, ensuring that there are no
+conflicts between names. 
+
+Message-passing style:
+Message passing style would most be the best approach for a system in which we are
+adding new operations with some degree of regularity. All this would entail
+is modifying the constructors for certain objects and adding in the operation
+as a case in the dispatch method. 

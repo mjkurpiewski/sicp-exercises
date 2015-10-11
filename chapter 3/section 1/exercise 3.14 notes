@@ -1,0 +1,14 @@
+(define r (list 'a 'b 'c 'd))
+(define s (mystery r))
+
+;; Before mystery
+r ; (a b c d)
+
+;; After calling mystery on r
+s ; (d c b a)
+r ; (a)
+
+(car s)
+(cdr s)
+(car r)
+(cdr r)

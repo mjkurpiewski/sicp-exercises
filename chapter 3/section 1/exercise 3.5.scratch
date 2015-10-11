@@ -1,0 +1,30 @@
+(/ (- (+ (expt 2 34) 1) 1) 4) ; 4294967296
+(/ (- (+ (expt 2 18) 1) 1) 4) ; 65536
+(expt 2 35)
+
+(estimate-pi 20000)
+
+(rand) ; 100
+
+;; function: estimate-integral
+;; args: # of trials,
+;; predicate P
+;; upper/lower bounds x1, x2, y1, y2 - bounding rectangle
+
+(estimate-integral '() 20 (list 2 4) (list 8 10))
+(integral-test (list 5 7) 3 (list 3 6)) ; #t
+(integral-test (list 5 7) 3 (list 3 20)) ; #f
+(integral-test (list 5 7) 3 (list 5 7)) ; #t
+
+(* 4.0 (estimate-integral integral-test 2000 (list -1.0 -1.0) (list 1.0 1.0)))
+(define debug-test-predicate (lambda () (integral-test 1.0 (list 0.0 0.0) (list -1 -1) (list 1 1))))
+(debug-test-predicate)
+(integral-test 1.0 (list 0.0 0.0) (list -1 -1) (list 1 1))
+(cesaro-test)
+
+
+(integral-test 1.0 (list 0 0) (list -1 -1) (list 1 1))
+
+(estimate)
+
+

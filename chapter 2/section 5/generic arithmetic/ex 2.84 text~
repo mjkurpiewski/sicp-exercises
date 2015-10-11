@@ -1,0 +1,11 @@
+
+Exercise 2.84: Using the raise operation of Exercise 2.83, modify the apply-generic procedure so that it coerces its arguments to have the same type by the method of successive raising, as discussed in this section. You will need to devise a way to test which of two types is higher in the tower. Do this in a manner that is “compatible” with the rest of the system and will not lead to problems in adding new levels to the tower.
+
+This seems tricky. So, first of all, we need to write a procedure to test which 
+of two (or more) arguments are higher in the tower. 
+
+Well, how do we know what's higher or lower from the information in the program,
+excluding our inherent knowledge of the tower being:
+	  integer -> rational -> real -> complex
+and without keying it to any real state of the program now, i.e., so that we can
+add new types and find out.

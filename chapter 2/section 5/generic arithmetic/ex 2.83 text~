@@ -1,0 +1,15 @@
+
+Exercise 2.83: Suppose you are designing a generic arithmetic system for dealing with the tower of types shown in Figure 2.25: integer, rational, real, complex. For each type (except complex), design a procedure that raises objects of that type one level in the tower. Show how to install a generic raise operation that will work for each type (except complex). 
+
+Breaking down the problem:
+There are three individual 'raise' procedures that we need to write
+a) integer -> rational
+   This takes some integer n and creates a rational number with 
+   numerator n and denominator 1.
+b) rational -> real
+   This will divide the numerator of the rational by it's denominator, but the
+   tricky part is that we need to coerce it to become a floating point representation,
+   rather than dividing some integer by some integer. So that needs some thought.
+c) real -> complex
+   This is easy, we construct a complex number with the real part being the 
+   given real 'r' and an imaginary part of 0.

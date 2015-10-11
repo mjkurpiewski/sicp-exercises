@@ -1,0 +1,21 @@
+Begin by defining a generic operation project that “pushes” an object down in the tower.
+
+For example, projecting a complex number would involve throwing away the imaginary part.
+-----
+What will projecting some arbitrary argument down a level look like?
+
+We need a generic operation called project which will take the form of:
+(define (project x) (apply-generic 'project x))
+
+For each type in the system, we need to define a specific 'project' operation
+and install it in our table for said type.
+
+For instance, we will install in our complex-package an operation called
+'project-complex' which will, if possible, yield a real number. This hinges on a test
+for whether or not there exists some imaginary component of the complex number.
+
+Writing the projection functions, not a big deal. All of that is incorporated
+into the program now, but the thing is, how can I generically ascertain how far
+a given argument can be projected? As the exercise said, 1.5 + 0i can be projected
+to real, but 1 + 0i can be projected to integer. Well, why can't that real be projected
+to a rational? 

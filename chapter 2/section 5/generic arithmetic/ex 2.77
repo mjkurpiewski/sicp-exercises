@@ -1,0 +1,22 @@
+In Exercise 2.77, we are asked why calling the operation magnitude on
+a complex number defined as (define z (make-complex-from-real-imag 3 4))
+returns an error saying that there is no method for magnitude on the type
+(complex). This is because, as the exercise states, that there are no
+entries in the operation table for magnitude, nor angle, imag-part, or real-part. As it stands, these were only defined for types 'rectangular or 'polar,
+subsets of the complex package. 
+
+By adding the given 4 lines to the complex package, magnitude now works. This
+is because the operation is now defined on the complex numbers, so the
+item, in this case (complex rectangular x . y), can now be parsed by apply-
+generic.
+
+The way this plays out is as such:
+z = (complex rectangular 3 4)
+(magnitude z)
+(apply-generic 'magnitude z)
+type-tags becomes 'complex
+proc becomes (get 'magnitude 'complex)
+proc is the generic magnitude function, defined as (apply-generic 'magnitude z)
+so we (apply-generic 'magnitude (rectangular 3 . 4))
+which returns as the procedure the rectangular magnitude function from the package
+and then evaluate (3 . 4) from that procedure.

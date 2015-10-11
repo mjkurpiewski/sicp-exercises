@@ -1,0 +1,65 @@
+
+Exercise 2.84: Using the raise operation of Exercise 2.83, modify the apply-generic procedure so that it coerces its arguments to have the same type by the method of successive raising, as discussed in this section. You will need to devise a way to test which of two types is higher in the tower. Do this in a manner that is “compatible” with the rest of the system and will not lead to problems in adding new levels to the tower.
+
+This seems tricky. So, first of all, we need to write a procedure to test which 
+of two (or more) arguments are higher in the tower. 
+
+Well, how do we know what's higher or lower from the information in the program,
+excluding our inherent knowledge of the tower being:
+	  integer -> rational -> real -> complex
+and without keying it to any real state of the program now, i.e., so that we can
+add new types and find out.
+
+Let's try using wishful thinking: We have a procedure called
+'highest-of-args' which takes two arguments, x and y. highest-of-args will try to
+raise both arguments until one of them can no longer be raised. Whichever type
+returns #f from 'raisable?' (a wishful thinking procedure which checks to see if there
+is a value in the table for raising whatever type is fed to it. 
+
+To me, this seems like a somewhat inelegant solution, but I will solve it in this
+manner until a better idea occurs to me. We shall see.
+
+Let's try to write 'raiseable?' really quickly. That wasn't too bad, what we do is
+we try to get the procedure from the table corresponding to the type of argument n.
+If it exists, we get a procedure, if it doesn't, we get #f. So if it doesn't exist,
+it is not raisable. So IF there does NOT exist some procedure, it is not raisable, 
+and returns #f. Otherwise, #t.
+
+So how will 'highest-of-args' work? Well, we need it to return which of the two 
+are highest, at least as a name. How will this procedure work?
+We have (define (highest-of-args n m)), the two arguments go in
+   (this should potentially be convertable to indeterminant numbers of arguments
+   using dotted tail notation with little effort)
+
+We check whether or not both arguments are raisable?
+If one of them is not, we know it's the highest, so we return the other.
+If both of them are not, they are the same type. So this should never be tested.
+   -- Maybe should write a conditional for this regardless
+If both of them are, recursively call:
+   (highest-of-args (raise n) (raise m))
+
+This doesn't work too well. Now we return a raised value, rather than the original,
+so that doesn't do us much good. Perhaps an iterative approach will work better for
+this, rather than recursive, which will allow us to maintain those original values.
+
+This isn't very good in terms of progress. Another approach would be better.
+Let's look at apply-generic as is. There are two approaches, either we
+go from arg1 to arg2, or vice versa // end
+
+May 29, 2015: New approach
+
+The criteria of import for this problem is ensuring that adding new types to this system would not be unwieldly or particularly difficult to implement. So what can we do that
+will satisfy that criteria? As I've discovered, attempting to discern the level or
+raisibility of some argument versus another argument is not a very good approach, there 
+isn't much in the system that tells us what relative level some type is when compared
+to another type. Repeatedly raising some arguments until one of them can no longer be
+raised is an obtuse way of attempting this, and requires more computational time than
+should be required for something like this. So perhaps we can add to the table we have
+for generic arithmetic functions a new function, called level. To do this, we will
+write:
+a) A generic function called level, which takes as an argument some arithmetic argument.
+   (level arg) = //an integer corresponding to the level
+
+The procedure level might look something akin to this:
+(define (level arg)
+	(cond ((eq? 'scheme-number (type-tag arg))

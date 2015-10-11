@@ -1,0 +1,23 @@
+(load "/home/pkurpiewski/Programming/Scheme/sicp-exercises/chapter 4/section 1/procedures.scm")
+
+(define (application? exp) (tagged-list? exp 'call))
+(define (app-operator exp) (cadr exp))
+(define (app-operands exp) (cddr exp))
+
+(define (eval exp env)
+  (cond ((self-evaluating? exp) exp)
+	((variable? exp) (lookup-variable-value exp env))
+	((quoted? exp) (text-of-quotation exp))
+	((application? exp)
+	 (apply (eval (app-operator exp) env)
+		(list-of-values (app-operands exp) env)))
+	((assignment? exp) (eval-assignment exp env))
+	((definition? exp) (eval-definition exp env))
+	((if? exp) (eval-if exp env))
+	((lambda? exp) (make-procedure (lambda-parameters exp)
+				  (lambda-body exp)
+				  exp))
+	((begin? exp) (eval-sequence (begin-actions exp) env))
+	((cond? exp) (eval (cond->if exp) env))
+	(else
+	 (error "Unknown expression type: EVAL" exp))))

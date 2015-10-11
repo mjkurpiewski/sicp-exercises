@@ -1,0 +1,65 @@
+(define (derivative exp var)
+  (cond ((constant? exp var) 0)
+	((same-var? exp var) 1)
+	((sum? exp) (make-sum (derivative (A1 exp) var)
+			      (derivative (A2 exp) var)))
+	((product? exp) (make-sum (make-product (M1 exp)
+						(derivative (M2 exp) var))
+				  (make-product (derivative (M1 exp) var)
+						(M2 exp))))))
+
+(define (constant? exp var)
+  (and (atom? exp)
+       (not (eq? exp var))))
+
+(define (same-var? exp var)
+  (and (atom? exp)
+       (eq? exp var)))
+
+(define (sum? exp)
+  (and (not (atom? exp))
+       (eq? (car exp) '+)))
+
+(define (product? exp)
+  (and (not (atom? exp))
+       (eq? (car exp) '*)))
+
+(define (make-sum A1 A2)
+  (cond ((and (number? A1)
+	      (number? A2))
+	 (+ A1 A2))
+	((and (number? A1) (= A1 0))
+	 A2)
+	((and (number? A2) (= A2 0))
+	 A1)
+	(else (list '+ A1 A2))))
+
+(define (make-product M1 M2)
+  (cond ((and (number? M1)
+	      (number? M2))
+	 (* M1 M2))
+	((and (number? M1) (= M1 0))
+	 0)
+	((and (number? M2) (= M2 0))
+	 0)
+	((and (number? M1) (= M1 1))
+	 M2)
+	((and (number? M2) (= M2 1))
+	 M1)
+	(else (list '* M1 M2))))
+
+(define A1 cadr)
+(define A2 caddr)
+(define M1 cadr)
+(define M2 caddr)
+
+(define atom?
+  (lambda (x)
+    (and (not (pair? x)) (not (null? x)))))
+
+(define foo
+  '(+ (* a (* x x))
+      (+ (* b x)
+	 c)))
+
+;; (derivative foo 'x) => (+ (+ (* a (+ (* x 1) (* 1 x))) (* 0 (* x x))) (+ (+ (* b 1) (* 0 x)) 0))
