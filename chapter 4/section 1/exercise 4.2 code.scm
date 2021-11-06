@@ -1,4 +1,4 @@
-(load "/home/pkurpiewski/Programming/Scheme/sicp-exercises/chapter 4/section 1/procedures.scm")
+(load "/home/mjkurpiewski/Programming/Scheme/sicp-exercises/chapter 4/section 1/procedures.scm")
 
 (define (application? exp) (tagged-list? exp 'call))
 (define (app-operator exp) (cadr exp))
