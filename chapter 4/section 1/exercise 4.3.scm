@@ -4,8 +4,8 @@
 ;; For the sake of this exercise, we can consider the car of any given expression
 ;; to be the operation on which the expression should be dispatched.
 
-(load "/home/pkurpiewski/Programming/Scheme/sicp-exercises/chapter 4/section 1/optable.scm")
-(load "/home/pkurpiewski/Programming/Scheme/sicp-exercises/chapter 4/section 1/procedures.scm")
+(load "/home/mjkurpiewski/Programming/Scheme/sicp-exercises/chapter 4/section 1/optable.scm")
+(load "/home/mjkurpiewski/Programming/Scheme/sicp-exercises/chapter 4/section 1/procedures.scm")
 
 (define eval-table (make-eq-hash-table))
 (hash-table/put! eval-table 'quote (lambda (exp env) (text-of-quotation exp)))
